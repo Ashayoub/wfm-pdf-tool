@@ -81,8 +81,10 @@ if uploaded_file:
                         elif dur >= 30:
                             repas = f"{a} - {b}"
 
-                    if pauses: pause1 = pauses[0]
-                    if len(pauses) > 1: pause2 = pauses[1]
+                    if pauses:
+                        pause1 = pauses[0]
+                    if len(pauses) > 1:
+                        pause2 = pauses[1]
 
                     rows.append([
                         matricule, name, times[0],
@@ -115,12 +117,13 @@ if uploaded_file:
         insert_after("Break 2_D", "Break 2_F")
 
         def split_range(v):
-            if pd.isna(v) or v == "": return "", ""
-            a, b = re.split(r"\s*-\s*", v)
-            return a, b
+            if pd.isna(v) or v == "":
+                return "", ""
+            parts = re.split(r"\s*-\s*", v)
+            return parts[0], parts[1] if len(parts) == 2 else ""
 
-        for c in ["Break 1_D","Lunch D","Break 2_D"]:
-            df[c], df[c.replace("_D","_F")] = zip(*df[c].map(split_range))
+        for c in ["Break 1_D", "Lunch D", "Break 2_D"]:
+            df[c], df[c.replace("_D", "_F")] = zip(*df[c].map(split_range))
 
         st.success("✅ Fichier prêt")
 
@@ -133,7 +136,3 @@ if uploaded_file:
             f,
             file_name="Horaires_Final_WFM_READY.xlsx"
         )
-streamlit
-pdfplumber
-pandas
-openpyxl
